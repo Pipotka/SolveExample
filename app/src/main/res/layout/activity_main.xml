@@ -44,7 +44,6 @@
             android:gravity="center"
             android:text="@string/incorrect"
             android:textSize="18sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -68,7 +67,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="0" />
-
     </LinearLayout>
 
     <TextView
@@ -77,9 +75,83 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-
         android:text="0.00%"
         android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/time"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/min_time" />
+
+            <TextView
+                android:id="@+id/min_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/max_time" />
+
+            <TextView
+                android:id="@+id/max_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/avg_time" />
+
+            <TextView
+                android:id="@+id/avg_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0.00" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,29 +190,38 @@
             android:gravity="center"
             android:text="=" />
 
-        <EditText
+        <TextView
             android:id="@+id/answer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="00" />
-
+            android:text="00" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/check_answer"
-            android:layout_width="match_parent"
+            android:id="@+id/correct_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="onClickCheck"
+            android:layout_weight="1"
             android:enabled="false"
-            android:text="@string/check" />
+            android:onClick="onClickButton"
+            android:text="@string/correct" />
 
+        <Button
+            android:id="@+id/incorrect_button"
+            android:layout_width="0dp"
+            android:enabled="false"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickButton"
+            android:text="@string/incorrect" />
     </LinearLayout>
 
     <LinearLayout
@@ -154,7 +235,6 @@
             android:layout_height="wrap_content"
             android:onClick="onClickStart"
             android:text="@string/start" />
-
     </LinearLayout>
 
 </LinearLayout>
