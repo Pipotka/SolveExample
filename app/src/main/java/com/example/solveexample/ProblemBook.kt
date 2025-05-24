@@ -3,6 +3,8 @@ package com.example.solveexample
 import kotlin.random.Random
 
 public class ProblemBook {
+    private var hashedDividers = HashMap<Int, List<Int>>()
+
     public var correctlySolvedProblems = 0;
     public var incorrectlySolvedProblems = 0;
 
@@ -44,8 +46,11 @@ public class ProblemBook {
                 result = Random.nextInt(10, 100)
             }
             Operators.DIVIDE ->{
-                val list = findDivisors(problem.firstOperand)
-                result = list[Random.nextInt(0, list.count())]
+                if (hashedDividers[problem.firstOperand] == null){
+                    hashedDividers[problem.firstOperand] = findDivisors(problem.firstOperand)
+                }
+                val list = hashedDividers[problem.firstOperand]
+                result = list!![Random.nextInt(0, list.count())]
             }
             else -> {}
         }
@@ -61,14 +66,14 @@ public class ProblemBook {
         val divisors = mutableListOf<Int>()
         val absNumber = kotlin.math.abs(number)
 
-        for (i in 10..99) {
+        for (i in 10..absNumber) {
             if (absNumber % i == 0) {
                 divisors.add(i)
 
-                if (i != absNumber / i) divisors.add(absNumber / i)
+                if (i != absNumber / i) divisors.add(absNumber / i) //Определение парных делителей
             }
         }
 
-        return divisors.filter { it >= 10 && it <= 99 }.distinct()
+        return divisors.distinct()
     }
 }
