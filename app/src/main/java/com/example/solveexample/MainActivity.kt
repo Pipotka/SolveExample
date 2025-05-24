@@ -1,9 +1,12 @@
 package com.example.solveexample
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.solveexample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -36,21 +39,44 @@ class MainActivity : AppCompatActivity() {
         {
             binding.answer.isEnabled = true
             binding.checkAnswer.isEnabled = true
+            animateBackground(ContextCompat.getColor(this, R.color.red),
+                ContextCompat.getColor(this, R.color.white),
+                600)
             return
         }
 
         if (answer == problemBook.getAnswer(problem)){
             problemBook.correctlySolvedProblems++
-            greenLight()
+            animateBackground(ContextCompat.getColor(this, R.color.green),
+                ContextCompat.getColor(this, R.color.white),
+                600)
         } else{
             problemBook.incorrectlySolvedProblems++
-            redLight()
+            animateBackground(ContextCompat.getColor(this, R.color.red),
+                ContextCompat.getColor(this, R.color.white),
+                600)
         }
 
         showState()
         runNewProblem()
         binding.answer.isEnabled = true
         binding.checkAnswer.isEnabled = true
+    }
+
+    private fun animateBackground(startColor: Int,
+                                  endColor: Int,
+                                  animDuration : Long) {
+        binding.root.setBackgroundColor(startColor)
+        ObjectAnimator.ofArgb(
+            binding.root,
+            "backgroundColor",
+            startColor,
+            endColor
+        ).apply {
+            duration = animDuration
+            interpolator = AccelerateDecelerateInterpolator()
+            start()
+        }
     }
 
     private fun runNewProblem(){
@@ -68,11 +94,7 @@ class MainActivity : AppCompatActivity() {
         binding.percentCorrect.text = "${"%.2f".format(problemBook.getPercentageOfCorrectAnswers())}%"
     }
 
-    private fun greenLight(){
-
-    }
-
-    private fun redLight(){
-
+    private fun clearBackground(){
+        binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
     }
 }
