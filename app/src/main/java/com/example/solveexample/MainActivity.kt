@@ -9,8 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.solveexample.databinding.ActivityMainBinding
-import java.util.Timer
-import kotlin.math.min
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -18,11 +16,11 @@ class MainActivity : AppCompatActivity() {
     private var problem = Problem()
     private var problemBook = ProblemBook()
     private var countDownTimer: CountDownTimer? = null
-    private var seconds = 0
-    private var minTime = 1000
-    private var maxTime = 0
+    private var miliSeconds = 0
+    private var minTime = 10000000.0f
+    private var maxTime = 0.00f
     private var avrTime = 0.00f
-    private var timeRecords = ArrayList<Int>()
+    private var timeRecords = ArrayList<Float>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             else -> false
         }
         stopTimer()
-        timeRecords.add(seconds)
+        timeRecords.add(getMiliseconds())
         binding.correctButton.isEnabled = false
         binding.incorrectButton.isEnabled = false
 
@@ -127,31 +125,41 @@ class MainActivity : AppCompatActivity() {
         binding.totalCount.text = "${problemBook.correctlySolvedProblems + problemBook.incorrectlySolvedProblems}"
         binding.correctCount.text = problemBook.correctlySolvedProblems.toString()
         binding.incorrectCount.text = problemBook.incorrectlySolvedProblems.toString()
-        binding.percentCorrect.text = "${"%.2f".format(problemBook.getPercentageOfCorrectAnswers())}%"
+        binding.percentCorrect.text = formatFloat(problemBook.getPercentageOfCorrectAnswers()) + '%'
     }
 
     private fun showTimerState(){
         binding.maxTime.text = maxTime.toString()
         binding.minTime.text = minTime.toString()
-        binding.avgTime.text = "${"%.2f".format(avrTime)}"
+        binding.avgTime.text = formatFloat(avrTime)
     }
 
     private fun updateTimerState(){
-        if (minTime > seconds) minTime = seconds
-        if (maxTime < seconds) maxTime = seconds
+        if (minTime > getMiliseconds()) minTime = getMiliseconds()
+        if (maxTime < getMiliseconds()) maxTime = getMiliseconds()
         avrTime = if (timeRecords.count() == 0) 0.0f else timeRecords.sum().toFloat() / timeRecords.count().toFloat()
+    }
+
+    private fun formatFloat(number : Float) : String{
+        return "%.2f".format(number)
     }
 
     private fun startTimer() {
         if (countDownTimer != null) return
 
-        countDownTimer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
+        countDownTimer = object : CountDownTimer(Long.MAX_VALUE, 1) {
             override fun onTick(millisUntilFinished: Long) {
-                seconds++
+                miliSeconds++
             }
 
             override fun onFinish() {}
-        }.start()
+        }
+
+        countDownTimer?.start()
+    }
+
+    private fun getMiliseconds() : Float{
+        return miliSeconds.toFloat() / 1000f
     }
 
     private fun stopTimer() {
@@ -162,6 +170,6 @@ class MainActivity : AppCompatActivity() {
     private fun resetTimer() {
         countDownTimer?.cancel()
         countDownTimer = null
-        seconds = 0
+        miliSeconds = 0
     }
 }

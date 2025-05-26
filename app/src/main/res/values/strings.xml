@@ -3,7 +3,7 @@
     <string name="total_solved">Итого решено примеров</string>
     <string name="incorrect">Неправильно</string>
     <string name="correct">Правильно</string>
-    <string name="start">старт</string>
+    <string name="start">Старт</string>
     <string name="check">Проверка</string>
     <string name="time">ВРЕМЯ(сек)</string>
     <string name="min_time">Минимум</string>
